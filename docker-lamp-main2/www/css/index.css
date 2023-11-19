@@ -1,0 +1,126 @@
+:root{
+    /*Fondo*/
+    --bs-primary: #f8f5ec;
+    /*Botones y elementos*/
+    --bs-secondary: #00ab61;
+    /*Pie de página*/
+    --bs-tertiary: #1c3037;
+    /*Todo por defecto de bootstrap*/
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger:  #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark:  #dee2e6;
+}
+.iconos {
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.calendario-titulo {
+    display: inline-block;
+    margin: 0;
+    margin-left: 8px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+#calendario {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mes {
+    background-color: var(--bs-secondary);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.dias-semana {
+    display: flex;
+    background-color: #f8f9fa;
+}
+
+.dias-semana div {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.dias-mes {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+}
+
+.dias-mes div {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 14px;
+}
+
+.dias-mes div:hover {
+    background-color: var(--bs-secondary);
+    color: #fff;
+}
+
+.fixed-carta {
+    height: 250px;
+}
+#contenedor-principal{
+    background-color: var(--bs-primary) !important;
+}
+
+a{
+    color: var(--bs-secondary) !important;
+}
+p, button {
+    color: var(--bs-secondary) !important;
+    font-weight: bold;
+}
+.img-contacto{
+    width: 50px;
+    height: 50px;
+}
+.tamano-contacto{
+    width: 69px;
+    height: 98px;
+
+}
+.badge{
+    background-color: var(--bs-secondary) !important;
+}
+.documento{
+    background-color: white !important;
+}
+
+#documento-arriba-izquierda{
+    border-top-left-radius: 16px !important;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+#documento-arriba-derecha{
+    border-top-right-radius: 16px !important;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+#documento-abajo-izquierda{
+    border-bottom-left-radius: 16px !important;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+#documento-abajo-derecha{
+    border-bottom-right-radius: 16px !important;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}

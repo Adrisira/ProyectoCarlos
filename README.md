@@ -1,4 +1,2 @@
-# ProyectoCarlos
-Enlace a GitHub: https://github.com/Adrisira/ProyectoCarlos
-Datos para la conexión a la base de datos:
+VE AL README QUE ESTA DENTRO DEL PROYECTO
   

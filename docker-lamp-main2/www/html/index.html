@@ -17,7 +17,7 @@
 <body>
 	<nav class="navbar navbar-expand-xl bg-body-tertiary">
 		<div class="container-fluid">
-			<a class="navbar-brand fw-bold" href="#">Area Recursos Humanos</a>
+			<a class="navbar-brand fw-bold" href="#" id="inicio">Area Recursos Humanos</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
 							Departamentos
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Alta de Departamentos</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuAltaDepartamento">Alta de Departamentos</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -47,7 +47,7 @@
 							Empleados
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#" id="mnuAltaTipo">Alta de empleados</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuAltaEmpleado">Alta de empleados</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -59,7 +59,88 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container-fluid p-3 bg-body-tertiary text-center bg-primary h-100" id="contenedor-principal">
+	<div class="container-fluid">
+		<div class="row">
+			<form class="form-horizontal" name="frmAltaDepartamento" id="frmAltaDepartamento">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Alta de departamento</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtNombre">Nombre</label>
+						<div class="col-xs-4">
+							<input id="txtNombre" name="txtNombre" placeholder="Nombre del departamento"
+								class="form-control input-md" type="text">
+						</div>
+					</div>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtLocalizacion">Localización</label>
+						<div class="col-xs-4">
+							<input id="txtLocalizacion" name="txtLocalizacion" placeholder="Localización del departamento" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnAceptarAltaDepartamento"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnAceptarAltaDepartamento" name="btnAceptarAltaDepartamento"
+								class="btn btn-primary" value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="row">
+			<form class="form-horizontal" name="frmAltaEmpleado" id="frmAltaEmpleado">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Alta de empleado</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtNombre">Nombre</label>
+						<div class="col-xs-4">
+							<input id="txtNombre" name="txtNombre" placeholder="Nombre del empleado"
+								class="form-control input-md" type="text">
+						</div>
+					</div>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtApellidos">Apellidos</label>
+						<div class="col-xs-4">
+							<input id="txtApellidos" name="txtApellidosn" placeholder="Apellidos" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtEmail">Email</label>
+						<div class="col-xs-4">
+							<input id="txtEmail" name="txtEmail" placeholder="Email" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtDepartamentoId">Departamento al que pertenece</label>
+						<div class="col-xs-4">
+							<input id="txtDepartamentoId" name="txtDepartamentoId" placeholder="Departamento Id" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnAceptarAltaEmpleado"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnAceptarAltaEmpleado" name="btnAceptarAltaEmpleado"
+								class="btn btn-primary" value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	
+	<div class="container-fluid p-3 bg-body-tertiary text-center bg-primary h-100" id="contenedorPrincipal">
 		<div class="row mt-5 ms-5">
 			<div class="col-xl-5 text-center p-3 mb-5 bg-body-tertiary rounded-5 h-100">
 				<h1 class="calendario-titulo">Calendario</h1>
@@ -392,6 +473,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
+		<script type="text/javascript" src="../js/ajax.js"></script>
+		<script type="text/javascript" src="../js/objeto.js"></script>
+		<script type="text/javascript" src="../js/codigo.js"></script>
+		
 </body>
 
 </html>

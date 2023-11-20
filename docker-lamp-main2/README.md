@@ -29,3 +29,14 @@ You can read this a Spanish article in Crashell platform: [Apache, PHP, MySQL y 
 ### Infrastructure model
 
 ![Infrastructure model](.infragenie/infrastructure_model.png)
+
+# Enlace a GitHub:
+https://github.com/Adrisira/ProyectoCarlos
+
+# Datos conexion a base de datos
+Usuario: root
+Contraseña: test
+
+
+# Datos importantes
+Nombre de la estructura: RRHH

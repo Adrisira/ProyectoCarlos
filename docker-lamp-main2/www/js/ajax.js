@@ -1,6 +1,6 @@
 "use strict";
 
-const rutaBackend = "http://localhost/ProyectoCarlos/docker-lamp-main2/www/php/";
+const rutaBackend = "http://localhost/php/";
 
 /**
  * Realiza peticiones AJAX de tipo GET

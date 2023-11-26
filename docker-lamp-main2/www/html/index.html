@@ -36,9 +36,9 @@
 								<hr class="dropdown-divider">
 							</li>
 
-							<li><a class="dropdown-item" href="#" id="mnuBuscarComponentes">Buscar un departamento</a>
+							<li><a class="dropdown-item" href="#" id="mnuBuscarDepartamento">Buscar un departamento</a>
 							</li>
-							<li><a class="dropdown-item" href="#">Listado de departamento</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuListadoDepartamento">Listado de departamento</a></li>
 						</ul>
 					</li>
 					<li class="nav-item dropdown">
@@ -51,14 +51,16 @@
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="#" id="mnuListadoTipo">Buscar un empleado</a></li>
-							<li><a class="dropdown-item" href="#" id="mnuListadoTipo">Listado de empleados</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuBuscarEmpleado">Buscar un empleado</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuListadoEmpleado">Listado de empleados</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuListadoEmpleadoPorDepartamento">Listado de empleados por Departamento</a></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	
 	<div class="container-fluid">
 		<div class="row">
 			<form class="form-horizontal" name="frmAltaDepartamento" id="frmAltaDepartamento">
@@ -78,6 +80,13 @@
 						<label class="col-xs-4 control-label" for="txtLocalizacion">Localización</label>
 						<div class="col-xs-4">
 							<input id="txtLocalizacion" name="txtLocalizacion" placeholder="Localización del departamento" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtManager">Manager</label>
+						<div class="col-xs-4">
+							<input id="txtManager" name="txtManager" placeholder="Manager del departamento" class="form-control input-md"
 								type="text">
 						</div>
 					</div>
@@ -109,7 +118,7 @@
 					<div class="form-group">
 						<label class="col-xs-4 control-label" for="txtApellidos">Apellidos</label>
 						<div class="col-xs-4">
-							<input id="txtApellidos" name="txtApellidosn" placeholder="Apellidos" class="form-control input-md"
+							<input id="txtApellidos" name="txtApellidos" placeholder="Apellidos" class="form-control input-md"
 								type="text">
 						</div>
 					</div>
@@ -121,10 +130,11 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-xs-4 control-label" for="txtDepartamentoId">Departamento al que pertenece</label>
+						<label class="col-xs-4 control-label" for="txtIdDepartamento">Departamento al que pertenece</label>
 						<div class="col-xs-4">
-							<input id="txtDepartamentoId" name="txtDepartamentoId" placeholder="Departamento Id" class="form-control input-md"
-								type="text">
+							<select  class="form-select" name="lstAltaEmpleado" id="lstAltaEmpleado">
+
+							</select>
 						</div>
 					</div>
 					<!-- Button -->
@@ -138,6 +148,83 @@
 				</fieldset>
 			</form>
 		</div>
+		<div class="row"> 
+			<form class="form-horizontal" name="frmBuscarDepartamento" id="frmBuscarDepartamento">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Buscar un Departamento</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtIdDepartamento">Id Departamento</label>
+						<div class="col-xs-4">
+							<input id="txtIdDepartamento" name="txtIdDepartamento" placeholder="Id del departamento"
+								class="form-control input-md" type="text">
+						</div>
+					</div>
+	
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnBuscarDepartamento"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnBuscarDepartamento" name="btnBuscarDepartamento"
+								class="btn btn-primary" value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>		
+		</div>
+		<div class="row"> 
+			<form class="form-horizontal" name="frmBuscarEmpleado" id="frmBuscarEmpleado">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Buscar un Empleado</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtIdEmpleado">Id Departamento</label>
+						<div class="col-xs-4">
+							<input id="txtIdEmpleado" name="txtIdEmpleado" placeholder="Id del departamento"
+								class="form-control input-md" type="text">
+						</div>
+					</div>
+	
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnBuscarEmpleado"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnBuscarEmpleado" name="btnBuscarEmpleado"
+								class="btn btn-primary" value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>		
+		</div>
+		<div class="row">
+			<form class="form-horizontal" name="frmListadoEmpleadoDepartamento" id="frmListadoEmpleadoDepartamento">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Listado de empleados por departamento</legend>
+					
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="lstDepartamento">Departamento</label>
+						<div class="col-xs-4">
+							<select  class="form-select" name="lstDepartamento" id="lstDepartamento">
+
+							</select>
+						</div>
+					</div>
+					
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnAceptarListadoPorDepartamento"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnAceptarListadoPorDepartamento" name="btnAceptarListadoPorDepartamento"
+								class="btn btn-primary" value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
 	</div>
 	
 	<div class="container-fluid p-3 bg-body-tertiary text-center bg-primary h-100" id="contenedorPrincipal">
@@ -455,6 +542,8 @@
 			</div>
 		</div>
 	</div>
+	<div class="container-fluid" id="contenedorListados"></div>
+	<div clase="container-fluid" id="contenedorBusquedas"></div>
 	<footer class="d-flex flex-column align-items-center justify-content-center">
 		<div class="mt-5 d-flex align-items-center text-center">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill me-3" viewBox="0 0 16 16">

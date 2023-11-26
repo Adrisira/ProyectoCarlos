@@ -3,11 +3,9 @@ include_once("config.php");
 $conexion = obtenerConexion();
 
 // Recoger datos
-$nombre = $_POST['nombre'];
-$localizacion = $_POST['localizacion'];
-$manager = $_POST['manager'];
+$empleado = json_decode($_POST['empleado']);
 
-$sql = "INSERT INTO departments VALUES (null,'$nombre','$localizacion', '$manager');";
+$sql = "INSERT INTO employees VALUES (null, '$empleado->nombre', '$empleado->apellido', '$empleado->email', $empleado->idDepartamento);";
 
 mysqli_query($conexion, $sql);
 
@@ -19,6 +17,6 @@ if (mysqli_errno($conexion) != 0) {
 
 } else {
     // Prototipo responder($datos,$error,$mensaje,$conexion)
-    responder(null, false, "Se ha insertado el tipo de componente", $conexion);
+    responder(null, false, "Se ha dado de alta el empleado", $conexion);
 }
 ?>

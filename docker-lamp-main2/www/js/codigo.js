@@ -164,19 +164,19 @@ async function procesarAltaEmpleado() {
     let nombre = frmAltaEmpleado.txtNombre.value.trim();
     let apellidos = frmAltaEmpleado.txtApellidos.value.trim();
     let email = frmAltaEmpleado.txtEmail.value.trim();
-    let idDepartamento = parseInt(frmAltaEmpleado.lstAltaEmpleado.value.trim());
+    let iddepartamento = parseInt(frmAltaEmpleado.lstAltaEmpleado.value.trim());
 
     // Validar datos del formulario
     if (validarAltaEmpleado()) {
-        let respuesta = await oRrhh.altaEmpleado(new Empleado(null, nombre, apellidos, email, idDepartamento)); 
+        let respuesta = await oRrhh.altaEmpleado(new Empleado(null, nombre, apellidos, email, iddepartamento)); 
         alert(respuesta.mensaje);
 
         if (!respuesta.error) { // Si NO hay error
             //Resetear formulario
-            frmAltaComponente.reset();
+            frmAltaEmpleado.reset();
             // Ocultar el formulario
-            //frmAltaComponente.style.display = "none";
-            //frmAltaDepartamento.style.display = "block";
+            frmAltaEmpleado.style.display = "none";
+            frmAltaEmpleado.style.display = "block";
         }
 
     }
@@ -349,7 +349,7 @@ async function procesarListadoPorDepartamento(){
     let respuesta = await oRrhh.listadoPorDepartamento(idDepartamento);
 
     let tabla = "<table class='table table-striped' id='listadoPorDepartamento'>";
-    tabla += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th><th>ACCION</th></tr></thead><tbody>";
+    tabla += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th></tr></thead><tbody>";
 
     for (let employees of respuesta.datos) {
         tabla += "<tr><td>" + employees.employee_id + "</td>";

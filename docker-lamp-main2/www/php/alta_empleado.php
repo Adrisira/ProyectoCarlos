@@ -5,7 +5,8 @@ $conexion = obtenerConexion();
 // Recoger datos
 $empleado = json_decode($_POST['empleado']);
 
-$sql = "INSERT INTO employees VALUES (null, '$empleado->nombre', '$empleado->apellido', '$empleado->email', $empleado->idDepartamento);";
+
+$sql = "INSERT INTO employees VALUES (null, '$empleado->nombre', '$empleado->apellido', '$empleado->email', $empleado->departamento); ";
 
 mysqli_query($conexion, $sql);
 

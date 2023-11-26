@@ -35,6 +35,8 @@ function registrarEventos() {
     frmBuscarDepartamento.btnBuscarDepartamento.addEventListener("click", procesarBuscarDepartamento);
     frmBuscarEmpleado.btnBuscarEmpleado.addEventListener("click", procesarBuscarEmpleado);
     frmListadoEmpleadoDepartamento.btnAceptarListadoPorDepartamento.addEventListener("click", procesarListadoPorDepartamento);
+    frmModificarDepartamento.btnAceptarModDepartamento.addEventListener("click", procesarModificarDepartamento);
+    frmModificarEmpleado.btnAceptarModEmpleado.addEventListener("click", procesarModificarEmpleado);
     inicio.addEventListener("click", mostrarContenido);
 }
 
@@ -79,6 +81,8 @@ function ocultarFormularios() {
     frmBuscarDepartamento.style.display = "none";
     frmBuscarEmpleado.style.display = "none";
     frmListadoEmpleadoDepartamento.style.display = "none";
+    frmModificarEmpleado.style.display = "none";
+    frmModificarDepartamento.style.display = "none";
 }
 function ocultarContenido() {
     contenedorPrincipal.style.display = "none";
@@ -224,6 +228,7 @@ async function actualizarDesplegableDepartamento(idDepartamentoSeleccionado){
     //frmModificarComponente.lstModTipo.innerHTML = options;
     frmAltaEmpleado.lstAltaEmpleado.innerHTML = options;
     frmListadoEmpleadoDepartamento.lstDepartamento.innerHTML = options;
+    frmModificarEmpleado.lstModIdDepartamento.innerHTML = options;
 
 }
 
@@ -267,7 +272,7 @@ async function procesarBuscarDepartamento() {
             let resultadoBusqueda = document.querySelector("#contenedorBusquedas");
 
             // Escribimos resultado
-            let tablaSalida = "<table class='table'>";
+            let tablaSalida = "<table class='table' id='listadoTablaDepartamento'>";
             tablaSalida += "<thead><tr><th>IDDEPARTAMENTO</th><th>NOMBRE</th><th>LOCALIZACION</th><th>MANAGER</th></tr></thead>";
             tablaSalida += "<tbody><tr>";
             tablaSalida += "<td>" + respuesta.datos.department_id + "</td>"
@@ -275,19 +280,99 @@ async function procesarBuscarDepartamento() {
             tablaSalida += "<td>" + respuesta.datos.location + "</td>"
             tablaSalida += "<td>" + respuesta.datos.manager + "</td>"
             tablaSalida += "<td><input type='button' class='btn btn-danger' value='Borrar' id='btnBorrarDepartamento' data-iddepartamento='" + respuesta.datos.department_id + "'></td>";
-            tablaSalida += "</tr></tbody></table>";
+            tablaSalida += "<td><button class='btn btn-primary' data-departamento='" + JSON.stringify(respuesta) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
+            tablaSalida += "</tbody></table>";
 
             resultadoBusqueda.innerHTML = tablaSalida;
             resultadoBusqueda.style.display = 'block';
 
             // Registrar evento para el botón borrar
             document.querySelector("#btnBorrarDepartamento").addEventListener("click", ProcesarBorrarDepartamento);
+            document.querySelector("#listadoTablaDepartamento").addEventListener("click", procesarBotonEditarDepartamento);
 
         } else { // Si hay error
             alert(respuesta.mensaje);
         }
 
     }
+}
+function procesarBotonEditarDepartamento(oEvento) {
+    let boton = null;
+
+    // Verificamos si han hecho clic sobre el botón o el icono
+    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "BUTTON") {
+        if (oEvento.target.nodeName == "I") {
+            // Pulsacion sobre el icono
+            boton = oEvento.target.parentElement; // El padre es el boton
+        } else {
+            boton = oEvento.target;
+        }
+
+        // 1.Ocultar todos los formularios
+        ocultarFormularios();
+        // 2.Mostrar el formulario de modificación de componentes
+        frmModificarDepartamento.style.display = "block";
+        // 3. Rellenar los datos de este formulario con los del componente
+        let departamento = JSON.parse(boton.dataset.departamento);
+
+        frmModificarDepartamento.txtModIdDepartamento.value = departamento.datos.department_id;
+        frmModificarDepartamento.txtModNombreDepartamento.value = departamento.datos.department_name;
+        frmModificarDepartamento.txtModLocalizacion.value = departamento.datos.location;
+        frmModificarDepartamento.txtModManager.value = departamento.datos.manager;
+
+
+    }
+}
+
+async function procesarModificarDepartamento(){
+    let idDepartamento = frmModificarDepartamento.txtModIdDepartamento.value.trim();
+    let nombre = frmModificarDepartamento.txtModNombreDepartamento.value.trim();
+    let localizacion = frmModificarDepartamento.txtModLocalizacion.value.trim();
+    let manager = frmModificarDepartamento.txtModManager.value.trim();
+    
+    // Validar datos del formulario
+    if (validarModDepartamento()) {
+        let respuesta = await oRrhh.modificarDepartamento(new Departamento(idDepartamento, nombre, localizacion, manager));
+
+        alert(respuesta.mensaje);
+
+        if (!respuesta.error) { // Si NO hay error
+            //Resetear formulario
+            frmModificarDepartamento.reset();
+            // Ocultar el formulario
+            frmModificarDepartamento.style.display = "none";
+        }
+
+    }
+}
+
+function validarModDepartamento() {
+    // Recuperar datos del formulario frmModificarComponente
+    let idDepartamento = frmModificarDepartamento.txtModIdDepartamento.value.trim();
+    let nombre = frmModificarDepartamento.txtModNombreDepartamento.value.trim();
+    let localizacion = frmModificarDepartamento.txtModLocalizacion.value.trim();
+    let manager = frmModificarDepartamento.txtModManager.value.trim();
+
+    let valido = true;
+    let errores = "";
+
+    if (isNaN(idDepartamento)) {
+        valido = false;
+        errores += "El identificador de componente debe ser numérico";
+    }
+
+
+    if (nombre.length == 0 || localizacion.length == 0 || manager.length == 0) {
+        valido = false;
+        errores += "El nombre y la descripción no pueden estar vacíos";
+    }
+
+    if (!valido) {
+        // Hay errores
+        alert(errores);
+    }
+
+    return valido;
 }
 
 function validarBuscarEmpleado() {
@@ -318,7 +403,7 @@ async function procesarBuscarEmpleado() {
             let resultadoBusqueda = document.querySelector("#contenedorBusquedas");
 
             // Escribimos resultado
-            let tablaSalida = "<table class='table'>";
+            let tablaSalida = "<table class='table' id='listadoPorEmpleado'>";
             tablaSalida += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th></tr></thead>";
             tablaSalida += "<tbody><tr>";
             tablaSalida += "<td>" + respuesta.datos.employee_id + "</td>"
@@ -327,6 +412,7 @@ async function procesarBuscarEmpleado() {
             tablaSalida += "<td>" + respuesta.datos.email + "</td>"
             tablaSalida += "<td>" + respuesta.datos.department_id + "</td>"
             tablaSalida += "<td><input type='button' class='btn btn-danger' value='Borrar' id='btnBorrarEmpleado' data-idempleado='" + respuesta.datos.employee_id + "'></td>";
+            
             tablaSalida += "</tr></tbody></table>";
 
             resultadoBusqueda.innerHTML = tablaSalida;
@@ -334,6 +420,7 @@ async function procesarBuscarEmpleado() {
 
             // Registrar evento para el botón borrar
             document.querySelector("#btnBorrarEmpleado").addEventListener("click", ProcesarBorrarEmpleado);
+            
 
         } else { // Si hay error
             alert(respuesta.mensaje);
@@ -343,7 +430,10 @@ async function procesarBuscarEmpleado() {
 
     
 }
+
+
 async function procesarListadoPorDepartamento(){
+    document.querySelector("#contenedorBusquedas").style.display = "block";
     let idDepartamento = parseInt(frmListadoEmpleadoDepartamento.lstDepartamento.value.trim());
 
     let respuesta = await oRrhh.listadoPorDepartamento(idDepartamento);
@@ -351,22 +441,109 @@ async function procesarListadoPorDepartamento(){
     let tabla = "<table class='table table-striped' id='listadoPorDepartamento'>";
     tabla += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th></tr></thead><tbody>";
 
-    for (let employees of respuesta.datos) {
-        tabla += "<tr><td>" + employees.employee_id + "</td>";
-        tabla += "<td>" + employees.first_name + "</td>";
-        tabla += "<td>" + employees.last_name + "</td>";
-        tabla += "<td>" + employees.email + "</td>";
-        tabla += "<td>" + employees.department_id + "</td></tr>";
-
-        //tabla += "<td><button class='btn btn-primary' data-componente='" + JSON.stringify(componente) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
+    for (let employee of respuesta.datos) {
+        tabla += "<tr><td>" + employee.employee_id + "</td>";
+        tabla += "<td>" + employee.first_name + "</td>";
+        tabla += "<td>" + employee.last_name + "</td>";
+        tabla += "<td>" + employee.email + "</td>";
+        tabla += "<td>" + employee.department_id + "</td>";
+        
+       
     }
 
     tabla += "</tbody></table>";
 
     // Agregamos el contenido a la capa de listados
     document.querySelector("#contenedorBusquedas").innerHTML = tabla;
-    document.querySelector("#contenedorBusquedas").style.display = "block";
-    // Agregar manejador de evento para toda la tabla
-    //document.querySelector("#listadoPorDepartamento").addEventListener('click', procesarBotonEditarComponente);
+    
 
+    // Agregar manejador de evento para toda la tabla
+    document.querySelector("#listadoPorDepartamento").addEventListener("click", procesarBotonEditarEmpleado);
 }
+
+function procesarBotonEditarEmpleado(oEvento) {
+    let boton = null;
+
+    // Verificamos si han hecho clic sobre el botón o el icono
+    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "BUTTON") {
+        if (oEvento.target.nodeName == "I") {
+            // Pulsacion sobre el icono
+            boton = oEvento.target.parentElement; // El padre es el boton
+        } else {
+            boton = oEvento.target;
+        }
+
+        // 1.Ocultar todos los formularios
+        ocultarFormularios();
+        // 2.Mostrar el formulario de modificación de componentes
+        frmModificarEmpleado.style.display = "block";
+        // 3. Rellenar los datos de este formulario con los del componente
+        let employee = JSON.parse(boton.dataset.employee);
+
+        frmModificarEmpleado.txtModIdEmpleado.value = employee.employee_id;
+        frmModificarEmpleado.txtModNombre.value = employee.first_name;
+        frmModificarEmpleado.txtModApellido.value = employee.last_name;
+        frmModificarEmpleado.txtModEmail.value = employee.email;
+        actualizarDesplegableDepartamento(employee.department_id);
+
+
+    }
+}
+
+async function procesarModificarEmpleado(){
+    let idEmpleado = frmModificarEmpleado.txtModIdEmpleado.value.trim();
+    let nombre = frmModificarEmpleado.txtModNombre.value.trim();
+    let apellido = frmModificarEmpleado.txtModApellido.value.trim();
+    let email = frmModificarEmpleado.txtModEmail.value.trim();
+    let idDepartamento = parseInt(frmModificarEmpleado.lstModIdDepartamento.value.trim());
+
+    // Validar datos del formulario
+    if (validarModEmpleado()) {
+        let respuesta = await oRrhh.modificarEmpleado(new Empleado(idEmpleado, nombre, apellido, email, idDepartamento));
+
+        alert(respuesta.mensaje);
+
+        if (!respuesta.error) { // Si NO hay error
+            //Resetear formulario
+            frmModificarEmpleado.reset();
+            // Ocultar el formulario
+            frmModificarEmpleado.style.display = "none";
+        }
+
+    }
+}
+
+function validarModEmpleado() {
+    // Recuperar datos del formulario frmModificarComponente
+    let idEmpleado = frmModificarEmpleado.txtModIdEmpleado.value.trim();
+    let nombre = frmModificarEmpleado.txtModNombre.value.trim();
+    let apellido = frmModificarEmpleado.txtModApellido.value.trim();
+    let email = frmModificarEmpleado.txtModEmail.value.trim();
+    let idDepartamento = parseInt(frmModificarEmpleado.lstModIdDepartamento.value.trim());
+
+    let valido = true;
+    let errores = "";
+
+    if (isNaN(idEmpleado)) {
+        valido = false;
+        errores += "El identificador de componente debe ser numérico";
+    }
+
+    if (isNaN(idDepartamento)) {
+        valido = false;
+        errores += "El precio del componente debe ser numérico";
+    }
+
+    if (nombre.length == 0 || apellido.length == 0 || email.length == 0) {
+        valido = false;
+        errores += "El nombre y la descripción no pueden estar vacíos";
+    }
+
+    if (!valido) {
+        // Hay errores
+        alert(errores);
+    }
+
+    return valido;
+}
+

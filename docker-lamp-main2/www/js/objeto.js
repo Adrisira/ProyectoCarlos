@@ -147,5 +147,29 @@ class Rrhh {
 
         return respuesta;
     }
+    async modificarDepartamento(oDepartamento) {
+        let datos = new FormData();
+
+        // Se podría pasar campo a campo al servidor
+        // pero en esta ocasión vamos a pasar todos los datos 
+        // en un solo parámetro cuyos datos van en formato JSON
+        datos.append("departamento",JSON.stringify(oDepartamento));
+       
+        let respuesta = await peticionPOST("modificar_departamento.php", datos);
+
+        return respuesta;
+    }
+    async modificarEmpleado(oEmpleado) {
+        let datos = new FormData();
+
+        // Se podría pasar campo a campo al servidor
+        // pero en esta ocasión vamos a pasar todos los datos 
+        // en un solo parámetro cuyos datos van en formato JSON
+        datos.append("empleado",JSON.stringify(oEmpleado));
+       
+        let respuesta = await peticionPOST("modificar_empleado.php", datos);
+
+        return respuesta;
+    }
 }
 

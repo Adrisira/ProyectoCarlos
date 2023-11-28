@@ -6,7 +6,7 @@ $conexion = obtenerConexion();
 $iddepartamento = $_POST['iddepartamento'];
 
 // SQL
-$sql = "DELETE FROM departments WHERE  department_id = $iddepartamento;";
+$sql = "DELETE FROM departments WHERE department_id = $iddepartamento;";
 
 $resultado = mysqli_query($conexion, $sql);
 

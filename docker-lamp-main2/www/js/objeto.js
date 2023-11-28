@@ -128,7 +128,7 @@ class Rrhh {
         return respuesta;
     }
 
-    async borrarDepartamento(idEmpleado) {
+    async borrarEmpleado(idEmpleado) {
         let datos = new FormData();
 
         datos.append("idempleado", idEmpleado);

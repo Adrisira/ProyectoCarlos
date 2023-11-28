@@ -113,7 +113,7 @@ async function ProcesarBorrarEmpleado(oEvento) {
     let boton = oEvento.target;
     let idEmpleado = boton.dataset.idempleado;
 
-    let respuesta = await oRrhh.borrarDepartamento(idEmpleado);
+    let respuesta = await oRrhh.borrarEmpleado(idEmpleado);
 
     alert(respuesta.mensaje);
 
@@ -263,17 +263,18 @@ function validarBuscarDepartamento() {
 }
 
 async function procesarBuscarDepartamento() {
+
     if (validarBuscarDepartamento()) {
         let idDepartamento = parseInt(frmBuscarDepartamento.txtIdDepartamento.value.trim());
 
         let respuesta = await oRrhh.buscarDepartamento(idDepartamento);
-
+        
         if (!respuesta.error) { // Si NO hay error
             let resultadoBusqueda = document.querySelector("#contenedorBusquedas");
 
             // Escribimos resultado
             let tablaSalida = "<table class='table' id='listadoTablaDepartamento'>";
-            tablaSalida += "<thead><tr><th>IDDEPARTAMENTO</th><th>NOMBRE</th><th>LOCALIZACION</th><th>MANAGER</th></tr></thead>";
+            tablaSalida += "<thead><tr><th>IDDEPARTAMENTO</th><th>NOMBRE</th><th>LOCALIZACION</th><th>MANAGER</th><th>ACTION</th></tr></thead>";
             tablaSalida += "<tbody><tr>";
             tablaSalida += "<td>" + respuesta.datos.department_id + "</td>"
             tablaSalida += "<td>" + respuesta.datos.department_name + "</td>"
@@ -404,7 +405,7 @@ async function procesarBuscarEmpleado() {
 
             // Escribimos resultado
             let tablaSalida = "<table class='table' id='listadoPorEmpleado'>";
-            tablaSalida += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th></tr></thead>";
+            tablaSalida += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th><th>ACTION</th></tr></thead>";
             tablaSalida += "<tbody><tr>";
             tablaSalida += "<td>" + respuesta.datos.employee_id + "</td>"
             tablaSalida += "<td>" + respuesta.datos.first_name + "</td>"
@@ -433,26 +434,37 @@ async function procesarBuscarEmpleado() {
 
 
 async function procesarListadoPorDepartamento(){
+    //Este codigo no tiene en cuenta el caso en el que un departemento no tenga ningún empleado
     document.querySelector("#contenedorBusquedas").style.display = "block";
     let idDepartamento = parseInt(frmListadoEmpleadoDepartamento.lstDepartamento.value.trim());
 
     let respuesta = await oRrhh.listadoPorDepartamento(idDepartamento);
-
     let tabla = "<table class='table table-striped' id='listadoPorDepartamento'>";
-    tabla += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th></tr></thead><tbody>";
-
-    for (let employee of respuesta.datos) {
-        tabla += "<tr><td>" + employee.employee_id + "</td>";
-        tabla += "<td>" + employee.first_name + "</td>";
-        tabla += "<td>" + employee.last_name + "</td>";
-        tabla += "<td>" + employee.email + "</td>";
-        tabla += "<td>" + employee.department_id + "</td>";
+    
+        if(!respuesta.error){
+            
         
-       
-    }
+            tabla += "<thead><tr><th>IDEMPLEADO</th><th>NOMBRE</th><th>APELLIDO</th><th>EMAIL</th><th>IDDEPARTAMENTO</th><th>ACTION</th></tr></thead><tbody>";
 
-    tabla += "</tbody></table>";
+            for (let employee of respuesta.datos) {
+                tabla += "<tr><td>" + employee.employee_id + "</td>";
+                tabla += "<td>" + employee.first_name + "</td>";
+                tabla += "<td>" + employee.last_name + "</td>";
+                tabla += "<td>" + employee.email + "</td>";
+                tabla += "<td>" + employee.department_id + "</td>";
+        
+                tabla+= "<td><button class='btn btn-primary' data-employee='" + JSON.stringify(respuesta) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
+                }
+    
 
+        tabla += "</tbody></table>";
+
+        } else {
+         alert(respuesta.mensaje);
+        }
+   
+    
+    
     // Agregamos el contenido a la capa de listados
     document.querySelector("#contenedorBusquedas").innerHTML = tabla;
     
@@ -480,11 +492,11 @@ function procesarBotonEditarEmpleado(oEvento) {
         // 3. Rellenar los datos de este formulario con los del componente
         let employee = JSON.parse(boton.dataset.employee);
 
-        frmModificarEmpleado.txtModIdEmpleado.value = employee.employee_id;
-        frmModificarEmpleado.txtModNombre.value = employee.first_name;
-        frmModificarEmpleado.txtModApellido.value = employee.last_name;
-        frmModificarEmpleado.txtModEmail.value = employee.email;
-        actualizarDesplegableDepartamento(employee.department_id);
+        frmModificarEmpleado.txtModIdEmpleado.value = employee.datos[0].employee_id;
+        frmModificarEmpleado.txtModNombre.value = employee.datos[0].first_name;
+        frmModificarEmpleado.txtModApellido.value = employee.datos[0].last_name;
+        frmModificarEmpleado.txtModEmail.value = employee.datos[0].email;
+        actualizarDesplegableDepartamento(employee.datos[0].department_id);
 
 
     }

@@ -16,8 +16,10 @@
 @font-face {
     font-family: "Oswald";
     src: url(https://fonts.googleapis.com/css2?family=Oswald&display=swap) format("truetype");
-    font-family: "Ubuntu";
-    src: url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap) format("truetype");
+}
+@font-face {
+    font-family: "Montserrat";
+    src: url('./Montserrat-VariableFont_wght.ttf') format('woff2');
 }
 
 footer{
@@ -100,7 +102,7 @@ form{
 
 body a{
     color: var(--bs-secondary) !important;
-    font-family: "Ubuntu", sans-serif !important;
+    font-family: "Montserrat", sans-serif !important;
 }
 p, button {
     color: var(--bs-secondary) !important;

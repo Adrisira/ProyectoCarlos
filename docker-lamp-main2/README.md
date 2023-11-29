@@ -37,3 +37,10 @@ Contraseña: test
 
 # Datos importantes
 Nombre de la estructura: RRHH
+La presentación esta dentro de la carpeta www
+
+
+# Datos Funcionales
+En Departarmentos se puede borrar y ediar desde Buscar Departamento
+En Empleado se puede borrar desde Buscar Empleado y editar desde Listado de empleados por departamento
+Lo he hecho así para que veas que se hacerlo de dos maneras diferentes
